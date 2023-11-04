@@ -1,5 +1,3 @@
-# SoftwareProject
-
 # :bulb: ProSoft 
 
 ## Plataforma para Gestión de Proyectos de Software en Pequeñas Empresas.
