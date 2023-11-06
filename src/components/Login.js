@@ -1,16 +1,7 @@
-import { useState } from "react";
+import LoginForm from '../components/LoginForm'
 
-export function Login() {
-
-    const [user, setUser] = useState({
-        email: '',
-        password: ''
-    })
-
-    return <div>
-        <form>
-            <input type="email" name="email" id="email" placeholder="correoejemplo@gmail.com" />
-            <input type="password" name="password" id="password" />
-        </form>
-    </div>
+export default function Login () {
+  return (
+    <LoginForm />
+  )
 }
