@@ -4,6 +4,7 @@ import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { useAuth } from "../context/authContext";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import validationLogin from "../validations/validationLogin";
 
@@ -57,6 +58,17 @@ export default function LoginForm() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 h-screen px-5 py-5">
       <div className="hidden sm:block">
+      <Link
+      to="/"
+      className="transform scale-100 hover:scale-110 transition-transform duration-300 bg-secondary text-white py-3 px-6 rounded-md hover:bg-quinary text-xl md:text-2xl lg:text-3xl absolute ml-2 mt-2"
+      >
+    <img
+        src="/assets/home.png"
+        alt="House icon"
+        className="w-6 h-6 md:w-8 md:h-8" // Ajusta el tamaño aquí con las clases de Tailwind CSS
+    />
+      </Link>
+
         <img
           className="w-full h-full rounded-l-lg object-cover shadow-[0_3px_10px_rgb(0,0,0,0.5)]"
           src="/assets/image-2.png"
