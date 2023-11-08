@@ -75,7 +75,11 @@ export default function LoginForm() {
               register={register}
               nameRegister="email"
               placeholder="tucorreo@gmail.com"
+<<<<<<< Updated upstream
               className="w-full rounded-lg bg-gray-700 mt-2 p-2 focus:border-bñlue-500 focus:bg-gray-800 focus:outline-none"
+=======
+              className="w-full rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
+>>>>>>> Stashed changes
               type="text"
             />
           </div>
@@ -90,7 +94,11 @@ export default function LoginForm() {
               className="w-full rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
               typeInput={visible === false ? "password" : "text"}
             />
+<<<<<<< Updated upstream
              <div className="text-2xl absolute my-11 right-2 text-gray-400">
+=======
+            <div className="text-2xl absolute my-11 right-2 text-gray-400">
+>>>>>>> Stashed changes
               {visible === false ? (
                 <AiOutlineEye onClick={toggle} />
               ) : (
@@ -110,7 +118,11 @@ export default function LoginForm() {
               Recordarme
             </p>
             <p className="text-gray-400 text-sm hover:cursor-pointer hover:underline hover:text-blue-800" onClick={() => navigate('/')}>
+<<<<<<< Updated upstream
              Olvidé la contraseña
+=======
+              Olvidé la contraseña
+>>>>>>> Stashed changes
             </p>
           </div>
           <button className="w-full my-5 py-2 bg-stone-400 shadow-lg duration-200 shadow-teal hover:shadow-teal-50/30 text-gray-800 font-bold rounded-lg">

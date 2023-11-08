@@ -7,7 +7,7 @@ import {AuthProvider} from './context/authContext'
 
 function App() {
   return (
-    <div className="bg-slate-300 text-black h-screen flex text-white">
+    <div>
       <AuthProvider>
       <Routes>
         <Route path="/" element={<Home/>} />
