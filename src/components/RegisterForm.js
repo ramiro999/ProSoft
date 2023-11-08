@@ -45,12 +45,12 @@ export default function LoginForm() {
       <div className="hidden sm:block">
       <Link
       to="/"
-      className="transform scale-100 hover:scale-110 transition-transform duration-300 bg-secondary text-white py-3 px-6 rounded-md hover:bg-quinary text-xl md:text-2xl lg:text-3xl absolute ml-2 mt-2"
+      className="transform scale-100 hover:scale-110 transition-transform duration-300 bg-quinary text-white py-3 px-6 rounded-md hover:bg-tertiary text-xl md:text-2xl lg:text-3xl absolute ml-2 mt-2"
       >
       <img
         src="/assets/home.png"
         alt="House icon"
-        className="w-6 h-6 md:w-8 md:h-8" // Ajusta el tamaño aquí con las clases de Tailwind CSS
+        className="w-6 h-6 md:w-8 md:h-8" // Ajustar el tamaño 
       />
       </Link>
         <img
