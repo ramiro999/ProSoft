@@ -68,14 +68,13 @@ export default function LoginForm() {
         className="w-6 h-6 md:w-8 md:h-8" // Ajusta el tamaño aquí con las clases de Tailwind CSS
     />
       </Link>
-
         <img
           className="w-full h-full rounded-l-lg object-cover shadow-[0_3px_10px_rgb(0,0,0,0.5)]"
           src="/assets/image-2.png"
           alt="Login"
         />
-      </div>
-      <div className="bg-fray-800 flex flex-col bg-gray-200 relative justify-center rounded-r-lg shadow-[0_3px_10px_rgb(0,0,0,0.5)]">
+        </div>
+        <div className="bg-fray-800 flex flex-col bg-gray-200 relative justify-center rounded-r-lg shadow-[0_3px_10px_rgb(0,0,0,0.5)]">
         <form
           onSubmit={handleSubmit(onSubmitFunction)}
           className="max-w-[400px]-w-full mx-20 bg-gray-900 p-10 px-8 rounded-lg"

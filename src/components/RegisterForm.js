@@ -42,6 +42,16 @@ export default function LoginForm() {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 h-screen px-5 py-5">
+      <Link
+      to="/login"
+      className="transform scale-100 hover:scale-110 transition-transform duration-300 bg-tertiary py-3 px-6 rounded-md hover:bg-quinary md:text-2xl lg:text-3xl absolute mt-2 ml-24"
+      >
+      <img
+        src="/assets/back.png"
+        alt="Back icon"
+        className="w-6 h-6 md:w-8 md:h-8" // Ajusta el tamaño aquí con las clases de Tailwind CSS
+      />
+      </Link>
       <div className="hidden sm:block">
       <Link
       to="/"
