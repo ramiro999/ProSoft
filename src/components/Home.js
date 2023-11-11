@@ -15,16 +15,16 @@ export function Home() {
     };
 
     return (
-        <div className="bg-primary min-h-screen flex flex-col items-center">
+        <div className="bg-sextarian min-h-screen flex flex-col items-center">
             {/* Header */}
-            <header className="w-full p-4 flex justify-between items-center">
-                <div className="flex items-center">
+            <header className="bg-primary w-full p-1 flex justify-between items-center">
+                <div className="p-1 flex items-center">
                     <img
                         src="/assets/logoPS.png"
                         alt="Logo ProSoft"
                         className="w-16 h-16 md:w-20 md:h-20 mr-2"
                     />
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl text-white font-extrabold tracking-wide">ProSoft</h1>
+                    <h1 className="text-4xl md:text-5xl lg:text-3xl text-white font-extrabold tracking-wide">ProSoft</h1>
                 </div>
                 <Link
                     to="/login"
@@ -33,7 +33,7 @@ export function Home() {
                     Iniciar Sesión
                 </Link>
             </header>
-            <hr className="w-full border-b border-tertiary my-4" />
+            <hr className="w-full border-b border-tertiary my-1" />
             {/* Content */}
             <div className="parent grid grid-cols-1 md:grid-cols-2 gap-4 p-4 w-full md:w-4/5 lg:w-3/5">
                 <div className="div1 text-center">
@@ -42,9 +42,8 @@ export function Home() {
                 <div className="div2 md:pl-8">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div
-                            className={`w-full overflow-hidden transform hover:scale-105 transition-transform duration-300 cursor-pointer ${
-                                selectedImage === "tarea2" ? "z-10" : ""
-                            }`}
+                            className={`w-full overflow-hidden transform hover:scale-105 transition-transform duration-300 cursor-pointer ${selectedImage === "tarea2" ? "z-10" : ""
+                                }`}
                             onClick={() => handleImageClick("tarea2")}
                         >
                             <img
@@ -54,9 +53,8 @@ export function Home() {
                             />
                         </div>
                         <div
-                            className={`w-full overflow-hidden transform hover:scale-105 transition-transform duration-300 cursor-pointer ${
-                                selectedImage === "tarea4" ? "z-10" : ""
-                            }`}
+                            className={`w-full overflow-hidden transform hover:scale-105 transition-transform duration-300 cursor-pointer ${selectedImage === "tarea4" ? "z-10" : ""
+                                }`}
                             onClick={() => handleImageClick("tarea4")}
                         >
                             <img
@@ -91,6 +89,11 @@ export function Home() {
                     />
                 </div>
             )}
+            <footer className="bg-primary">
+                <div>
+                    <button>hola</button>
+                </div>
+            </footer>
         </div>
     );
 }
