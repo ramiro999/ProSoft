@@ -47,9 +47,6 @@ export default function LoginForm() {
     }
   };
 
-  const handleClick = async () => {
-    navigate("/register");
-  };
 
   const handleRememberChange = (event) => {
     const checked = event.target.checked;
@@ -72,11 +69,11 @@ export default function LoginForm() {
           </Link>
           <img
             className="w-full h-full rounded-l-lg object-cover shadow-[0_3px_10px_rgb(0,0,0,0.5)]"
-            src="/assets/login_2.png"
+            src="/assets/login_3.png"
             alt="Login"
           />
         </div>
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center rounded-r-lg">
           <form
             onSubmit={handleSubmit(onSubmitFunction)}
             className="w-full max-w-md p-6 bg-gray-900 rounded-lg" // Reduciendo el tamaño máximo del formulario
