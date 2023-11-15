@@ -36,7 +36,7 @@ export default function LoginForm() {
   const onSubmitFunction = async (user) => {
     try {
       await login(user.email, user.password);
-      navigate("/");
+      navigate("/backlog");
     } catch (error) {
       if (error.code === "auth/user-not-found") {
         setError("email", { type: "usernotfound" }, { shouldFocus: true });
