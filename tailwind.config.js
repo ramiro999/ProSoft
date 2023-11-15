@@ -8,6 +8,9 @@ module.exports = {
         tertiary: "#E9C46A",
         quaternary: "#F4A261",
         quinary: "#E76F51",
+        sextarian: '#D9D9D9',
+        seven: '#4B8196',
+        eight: '#255456'
       },
     },
   },

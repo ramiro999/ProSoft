@@ -13,84 +13,55 @@ export function Home() {
     const resetSelectedImage = () => {
         setSelectedImage(null);
     };
-
-    return (
-        <div className="bg-primary min-h-screen flex flex-col items-center">
-            {/* Header */}
-            <header className="w-full p-4 flex justify-between items-center">
-                <div className="flex items-center">
-                    <img
-                        src="/assets/logoPS.png"
-                        alt="Logo ProSoft"
-                        className="w-16 h-16 md:w-20 md:h-20 mr-2"
-                    />
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl text-white font-extrabold tracking-wide">ProSoft</h1>
-                </div>
-                <Link
-                    to="/login"
-                    className="transform scale-100 hover:scale-110 transition-transform duration-300 bg-secondary text-white py-3 px-6 rounded-md hover:bg-quinary text-xl md:text-2xl lg:text-3xl"
-                >
-                    Iniciar Sesión
-                </Link>
-            </header>
-            <hr className="w-full border-b border-tertiary my-4" />
-            {/* Content */}
-            <div className="parent grid grid-cols-1 md:grid-cols-2 gap-4 p-4 w-full md:w-4/5 lg:w-3/5">
-                <div className="div1 text-center">
-                    <p className="text-3xl md:text-4xl lg:text-5xl text-white font-extrabold tracking-wide">La gestión de tareas al alcance de tus manos</p>
-                </div>
-                <div className="div2 md:pl-8">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div
-                            className={`w-full overflow-hidden transform hover:scale-105 transition-transform duration-300 cursor-pointer ${
-                                selectedImage === "tarea2" ? "z-10" : ""
-                            }`}
-                            onClick={() => handleImageClick("tarea2")}
-                        >
-                            <img
-                                src="/assets/tarea2.png"
-                                alt="Tareas 1"
-                                className="w-full h-full object-cover rounded-md hover:shadow-lg"
-                            />
-                        </div>
-                        <div
-                            className={`w-full overflow-hidden transform hover:scale-105 transition-transform duration-300 cursor-pointer ${
-                                selectedImage === "tarea4" ? "z-10" : ""
-                            }`}
-                            onClick={() => handleImageClick("tarea4")}
-                        >
-                            <img
-                                src="/assets/tarea4.png"
-                                alt="Tareas 3"
-                                className="w-full h-full object-cover rounded-md hover:shadow-lg"
-                            />
-                        </div>
+    let [open,setOpen]=useState(false);
+    return (    
+        <div className="bg-sextarian">
+            <div className='shadow-md w-full items-center fixed top-0 left-0'>
+                <div className='md:flex items-center justify-between bg-primary py-1 md:px-10 '>
+                    <div className='font-bold text-2xl cursor-pointer flex items-center text-white p-1'>
+                        <span className='text-3xl text-indigo-600 mr-1 '>
+                            <img className="h-10 inline" src="/assets/p1.png" alt="Imagen"/>
+                        </span>
+                        ProSoft
                     </div>
-                </div>
-                <div className="div3 text-center">
-                    <h2 className="text-5xl md:text-5xl lg:text-5xl text-white font-extrabold tracking-wide mb-5">Desarrolladores</h2>
-                    <ul className="text-xl md:text-xl lg:text-xl text-white font-extrabold tracking-wide">
-                        <li>Juan Camilo Guerrero Ortega</li>
-                        <li>Cesar Enrique Rojas Hernandez</li>
-                        <li>Ramiro Santiago Avila Chacon</li>
+                    <div onClick={()=>setOpen(!open)} className='text-3xl absolute right-8 top-3 cursor-pointer flex md:hidden items-center'>
+                        <img name={open ? 'close':'menu'} className="h-8 inline" src="/assets/menu.png" alt="Imagen" />
+                    </div>
+                    <ul className={`md:flex md:items-center md:pb-0  absolute md:static bg-primary md:z-auto z-[-1] left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-800 ease-in ${open ? 'top-15 ':'top-[-490px]'}`}>
+                        <li className="mb-2 lg:mb-0">
+                                <Link
+                                    to="/register"
+                                    className="block px-4 py-4 text-white font-bold lg:inline-block lg:mt-0 hover:text-gray-300"
+                                >
+                                    Registrarse
+                                </Link>
+                            </li>
+                            <li className="mb-2 lg:mb-0">
+                                <Link
+                                    to="/login"
+                                    className="block px-4 py-4 text-white font-bold lg:inline-block lg:mt-0 hover:text-gray-300"
+                                >
+                                    Iniciar Sesión
+                                </Link>
+                        </li>
                     </ul>
                 </div>
-                <div className="div4 text-center">
-                    <p className="text-3xl md:text-4xl lg:text-5xl text-white font-extrabold tracking-wide">En ProSoft podrás organizar de manera más eficiente tus actividades.</p>
-                </div>
             </div>
-            {selectedImage && (
-                <div
-                    className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-80 flex items-center justify-center z-20"
-                    onClick={resetSelectedImage}
-                >
-                    <img
-                        src={`/assets/${selectedImage}.png`}
-                        alt="Selected Image"
-                        className="max-w-full max-h-full"
-                    />
+
+            <div className="bg-seven p-6 grid grid-cols-1 flex flex-col sm:flex-row items-center justify-center sm:grid-cols-2">
+                <div className="order-2 p-6 sm:order-1 text-center">
+                    <p className="mt-2 text-2xl sm:text-4xl text-white text-left font-bold rounded-lg">
+                    ProSoft te proporciona la estructura que necesitas sin sacrificar la flexibilidad
+                    <br />
+                    <span className="text-2xl">Deja atrás la complejidad y abraza la simplicidad</span>
+                    </p>
                 </div>
-            )}
+                <img
+                    src="/assets/Scrum3.png"
+                    alt="Imagen"
+                    className="w-1/2 md:h-90 sm:w-90 order-1 sm:order-2 bg-primary rounded-3xl p-4 mx-auto my-auto"
+                />
+            </div>
         </div>
     );
 }
