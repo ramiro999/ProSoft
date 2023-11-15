@@ -4,6 +4,7 @@ import { Home } from "./components/Home";
 import  Login  from "./pages/Login";
 import { Register } from "./pages/Register";
 import {AuthProvider} from './context/authContext'
+import Backlog from './pages/Backlog';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<Home/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/register" element={<Register/>} />
+        <Route path="/backlog" element={<Backlog/>} />
     </Routes>
       </AuthProvider>
     </div>
