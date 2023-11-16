@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.bg-primary {
+  background-color: #264653;
+}
+
+.bg-secondary {
+    background-color: #2A9D8F;
+}
+
+.bg-tertiary {
+    background-color: #E9C46A;
+}
+
+.bg-quaternary {
+    background-color: #F4A261;
+}
+
+.bg-quinary {
+    background-color: #E76F51;
+}

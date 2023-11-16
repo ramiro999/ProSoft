@@ -1,11 +1,9 @@
-import React, {useState} from 'react';
-import Sidebar from '../components/Sidebar';
-import Input from '../components/Input';
-import BlockLabelButton from '../components/BlockLabelButton';
+import React, {useState} from "react";
+import TaskCard from "../components/TaskCard";
 
-export default function Backlog() {
-
-  const [open, setOpen] = useState(true);
+export default function Planner() {
+    
+    const [open, setOpen] = useState(true);
     const Menus = [
         { title: "Backlog", src: "User", gap: true },
         { title: "Planificador ", src: "Calendar" },
@@ -13,7 +11,7 @@ export default function Backlog() {
         { title: "Comentarios", src: "Chart" },
         { title: "Configuraciones", src: "Setting", gap: true  },
       ];
-
+    
     return (
         <div className="flex">
           <div
@@ -65,10 +63,64 @@ export default function Backlog() {
           <div className="h-screen flex-1 p-7">
             <h1 className="text-2xl text-white font-semibold bg-primary">Proyecto</h1>
 
-            <div className="d-flex my-5">
-            <BlockLabelButton></BlockLabelButton>
-              </div>
+            <div className="d-flex">
+                
+                  <div className="col-3 mx-3">
+                    <div className="bg-quinary my-2 px-3 py-2 rounded" >Por Hacer</div>
+                    <div>
+                        <TaskCard></TaskCard>
+                        <TaskCard></TaskCard>
+                    </div>
+                  </div>
+
+                  <div className="col-3 mx-3">
+                    <div className="bg-quaternary my-2 px-3 py-2 rounded">En Proceso</div>
+                    <div>
+                        <TaskCard></TaskCard>
+                    </div>
+                  </div>
+
+                  <div className="col-3 mx-3">
+                    <div className="bg-tertiary my-2 px-3 py-2 rounded">En revisión</div>
+                    <div>
+                        <TaskCard></TaskCard>
+                    </div>
+                  </div>
+
+                  <div className="col-3 mx-3">
+                    <div className="bg-secondary my-2 px-3 py-2 rounded">Finalizado</div>
+                    <div>
+                        <TaskCard></TaskCard>
+                    </div>
+                  </div>
+ 
+
+
+
+            </div>
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
           </div>
-    </div>
-  );
-}   
+
+          
+
+
+
+
+
+
+
+
+
+        </div>
+    )
+}
