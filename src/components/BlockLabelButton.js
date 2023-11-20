@@ -8,9 +8,9 @@ export default function BlockLabelButton() {
     const [activeSprintForModal, setActiveSprintForModal] = useState(null);
 
     const crearSprint = () => {
-        const newSprint = {
-            id: sprints.length + 1,
-            name: `Sprint ${sprints.length + 1}`,
+        const newSprint = { // Objeto para representar un sprint
+            id: sprints.length + 1, // ID del sprint
+            name: `Sprint ${sprints.length + 1}`, // Nombre del sprint
             incidencias: [] // Un array para almacenar las incidencias
         };
         setSprints([...sprints, newSprint]);
@@ -40,7 +40,7 @@ export default function BlockLabelButton() {
                         {sprint.name}
                         <button
                             data-modal-target="crud-modal" data-modal-toggle="crud-modal"
-                            className="ml-2 bg-blue-500 hover:bg-blue-700 text-white py-1 px-3 rounded"
+                            className="ml-2 bg-tertiary hover:bg-quaternary text-white py-1 px-3 rounded"
                             onClick={() => {
                                 setActiveSprintForModal(sprint.name);
                                 setIsModalOpen(true);
