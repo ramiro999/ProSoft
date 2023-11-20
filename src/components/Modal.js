@@ -41,13 +41,13 @@ const Modal = ({ isOpen, onClose, onAddIncidencia, sprintId }) => {
           <div className="flex flex-col sm:flex-row justify-center items-center space-y-1 sm:space-y-0 sm:space-x-3 mt-4">
             <button
               type="submit"
-              className="bg-tertiary hover:bg-quaternary text-white py-1 px-3 rounded my-3 sm:my-0"
+              className="bg-tertiary hover:bg-quaternary text-white py-1 px-3 rounded my-1 sm:my-0"
             >
               Agregar
             </button>
 
             <button
-              className="bg-tertiary hover:bg-quaternary text-white py-1 px-3 rounded my-3 sm:my-0"
+              className="bg-tertiary hover:bg-quaternary text-white py-1 px-3 rounded my-1 sm:my-0"
               onClick={onClose}
             >
               Cerrar

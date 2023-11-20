@@ -28,7 +28,7 @@ export default function BlockLabelButton() {
                 <span className="text-gray-700 mr-2">Backlog ({sprints.length} Sprints)</span>
                 <button 
                     onClick={crearSprint}
-                    className="bg-tertiary hover:bg-quaternary text-black py-1 px-3 rounded-lg transition-colors duration-200"
+                    className="bg-tertiary hover:bg-quaternary text-white py-1 px-3 rounded-lg transition-colors duration-200"
                 >
                     Crear sprint
                 </button>
