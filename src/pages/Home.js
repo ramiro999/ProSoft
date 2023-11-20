@@ -84,7 +84,7 @@ export function Home() {
                     </li>
                     <li>
                         <a
-                            href="https://www.linkedin.com/"
+                            href="https://www.linkedin.com/in/juan-camilo-guerrero-ortega-978aa7232/"
                             class="block font-sans text-base font-normal leading-relaxed text-blue-gray-900 antialiased transition-colors hover:text-pink-500 focus:text-pink-500"
                         >
                             Juan G.
