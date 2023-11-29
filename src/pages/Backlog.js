@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Sidebar from '../components/Sidebar';
 import Input from '../components/Input';
-import BlockLabelButton from '../components/BlockLabelButton';
+import AddBar from '../components/AddBar';
 
 export default function Backlog() {
 
@@ -66,7 +66,7 @@ export default function Backlog() {
             <h1 className="text-2xl text-white font-semibold bg-primary">Proyecto</h1>
 
             <div className="d-flex my-5">
-            <BlockLabelButton></BlockLabelButton>
+            <AddBar></AddBar>
               </div>
           </div>
     </div>
