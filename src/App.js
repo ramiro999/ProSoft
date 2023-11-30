@@ -9,6 +9,7 @@ import { Register } from "./pages/Register";
 import {AuthProvider} from './context/authContext'
 import Backlog from './pages/Backlog';
 import Planner from './pages/Planner';
+import Schedule from './pages/Schedule';
 
 const data = {
   data: [
@@ -19,7 +20,7 @@ const data = {
     { id: 1, source: 1, target: 2, type: '0' }
   ]
 };
-class App extends Component {
+class GanttApp extends Component {
   state = {
     currentZoom: 'Days',
     messages: []
@@ -79,20 +80,22 @@ class App extends Component {
   }
 }
 
-//function App() {
-//  return (
-//    <div>
-//      <AuthProvider>
-//      <Routes>
-//        <Route path="/" element={<Home/>} />
-//        <Route path="/login" element={<Login/>} />
-//        <Route path="/register" element={<Register/>} />
-//        <Route path="/backlog" element={<Backlog/>} />
-//        <Route path="/planner" element={<Planner/>} />
-//    </Routes>
-//      </AuthProvider>
-//    </div>
-//  )
-//}
+function App() {
+  return (
+    <div>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/backlog" element={<Backlog />} />
+          <Route path="/planner" element={<Planner />} />
+          <Route path="/schedule" element={<Schedule />} /> 
+        </Routes>
+      </AuthProvider>
+    </div>
+  );
+}
 
 export default App;
+export { GanttApp };

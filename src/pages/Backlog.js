@@ -24,7 +24,7 @@ export default function Backlog() {
             <img
               src="/assets/icons/control.png"
               className={`absolute cursor-pointer -right-3 top-9 w-7 border-dark-purple
-               border-2 rounded-full  ${!open && "rotate-180"}`}
+              border-2 rounded-full  ${!open && "rotate-180"}`}
               onClick={() => setOpen(!open)}
             />
             <div className="flex gap-x-4 items-center">
