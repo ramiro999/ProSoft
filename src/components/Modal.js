@@ -42,7 +42,7 @@ const Modal = ({ isOpen, onClose, onAddIncidencia, sprintId, actualizarIncidenci
 
 
   // Función para guardar los datos en la base de datos
-  const saveDataToFirebase = (formData) => {
+  const saveDataToFirebase = (formData, sprintId) => {
     // Define la ruta en la base de datos para guardar los datos
     const newIncidenciaKey = push( // Genera un ID único para la incidencia
       child(ref(db), `incidencias/${sprintId}`) // Guarda la incidencia en la colección de incidencias
@@ -54,12 +54,15 @@ const Modal = ({ isOpen, onClose, onAddIncidencia, sprintId, actualizarIncidenci
 
     // Usa la función set para guardar los datos en la base de datos
     set(incidenciaRef, {
-      ...formData, // Guarda todos los datos del formulario
-      sprintId, // Guarda el ID del sprint
+      ...formData,
+      sprintId,
     })
       .then(() => {
-        console.log("Incidencia guardada con éxito");
-        actualizarIncidencias({ ...formData, id: newIncidenciaKey });
+        // Llama a la función onAddIncidencia con los datos de la nueva incidencia y el sprintId
+        onAddIncidencia({
+          ...formData,
+          id: newIncidenciaKey, // Asegúrate de incluir el ID de la incidencia
+        }, sprintId);
         onClose(); // Cierra el modal
       })
       .catch((error) => {
@@ -69,8 +72,8 @@ const Modal = ({ isOpen, onClose, onAddIncidencia, sprintId, actualizarIncidenci
 
   const onSubmit = (data) => {
     console.log("Form data: ", data);
-    saveDataToFirebase(data);
-    onAddIncidencia(sprintId); // Llama a la función para agregar la incidencia
+    saveDataToFirebase(data, sprintId);
+    //onAddIncidencia(sprintId); // Llama a la función para agregar la incidencia
     onClose();
   };
 

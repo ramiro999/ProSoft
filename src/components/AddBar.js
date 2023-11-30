@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../firebase";
 import { get, set, ref, child, push } from "firebase/database";
+import SprintCard from "./SprintCard";
 
 import Modal from "./Modal";
 
@@ -47,6 +48,13 @@ export default function AddBar({ sprintId }) {
       [sprintId]: [...(prev[sprintId] || []), nuevaIncidencia] // Asegúrate de que prev[sprintId] es un array
     }));
   };
+
+  const handleAddIncidencia = (nuevaIncidencia, sprintId) => {
+    setIncidenciasPorSprint(prev => ({
+      ...prev,
+      [sprintId]: [...(prev[sprintId] || []), nuevaIncidencia]
+    }));
+  };
   
 
 
@@ -80,32 +88,24 @@ export default function AddBar({ sprintId }) {
         </button>
       </div>
 
-      <div className="grid grid-cols-1 gap-4">
+      <div className="max-w-4xl mx-auto">
       {sprints.map((sprint) => (
-        <div key={sprint.id} className="sprint-container">
-          <h2>{sprint.name}</h2>
-          <button onClick={() => {
-            setActiveSprintForModal(sprint.id);
-            setIsModalOpen(true);
-          }}>
-            Agregar Incidencia
-          </button>
-          <div>
-            {/* Asegurarse de que incidenciasPorSprint[sprint.id] es un array antes de mapearlo */}
-            {Array.isArray(incidenciasPorSprint[sprint.id]) && incidenciasPorSprint[sprint.id].map((incidencia, index) => (
-              <div key={index}>{incidencia.nombre}</div>
-            ))}
-          </div>
-        </div>
+        <SprintCard
+          key={sprint.id}
+          sprint={sprint}
+          incidencias={incidenciasPorSprint[sprint.id] || []}
+          onAddIncidencia={() => {/* Lógica para manejar la adición de incidencias */}}
+        />
       ))}
-      </div>
+    </div>
+
 
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        onAddIncidencia={agregarIncidencia}
+        onAddIncidencia={handleAddIncidencia}
         sprintId={activeSprintForModal}
-        //actualizarIncidencias={actualizarIncidencias}
+        
       />
     </>
   );
