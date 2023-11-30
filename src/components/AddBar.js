@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../firebase";
-import { ref, onValue } from "firebase/database";
+import { get, set, ref, child, push } from "firebase/database";
+
 import Modal from "./Modal";
 
 export default function AddBar({ sprintId }) {
@@ -9,22 +10,31 @@ export default function AddBar({ sprintId }) {
   const [activeSprintForModal, setActiveSprintForModal] = useState(null);
   const [incidencias, setIncidencias] = useState([]);
 
-  useEffect(() => {
-    const incidenciasRef = ref(db, `incidencias/${sprintId}`); // Referencia a la colección de incidencias
-    onValue(incidenciasRef, (snapshot) => { // Escucha los cambios en la base de datos
-        if (snapshot.exists()) { // Si hay incidencias
-            const data = snapshot.val(); // Obtiene los datos
-            setIncidencias(Object.values(data)); // Actualiza el estado
-        } else { // Si no hay incidencias
-            console.log("No hay incidencias.");  // Muestra un mensaje en la consola
-        }
+  const getIncidencias = () => {
+    get(child(ref(db), `incidencias/${sprintId}`))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        console.log(snapshot.val());
+        const data = snapshot.val();
+        setIncidencias(data);
+      } else {
+        console.log("No data available");
+      }
+    })
+    .catch((error)=> {
+      console.error(error);
     });
-}, [sprintId]);
+  };
+
+  useEffect(() => {
+    getIncidencias();
+  }, []);
 
 
-
-
-
+  const actualizarIncidencias = (nuevaIncidencia) => {
+    setIncidencias(prevIncidencias => [...prevIncidencias, nuevaIncidencia]);
+  };
+  
   const crearSprint = () => {
     const newSprint = {
       // Objeto para representar un sprint
@@ -36,8 +46,6 @@ export default function AddBar({ sprintId }) {
   };
 
   const agregarIncidencia = (sprintId) => {
-    // Aquí lógica para añadir la incidencia al sprint correspondiente
-    
     console.log(`Añadir incidencia a ${sprintId}`);
     setIsModalOpen(false); // Cerrar el modal
   };
@@ -78,25 +86,26 @@ export default function AddBar({ sprintId }) {
             </button>
 
             <div>
-              {incidencias
-                .filter((inc) => inc.sprintId === sprint.id)
-                .map((incidencia, index) => (
-                  <div key={index}>
-                    <h3>{incidencia.nombre}</h3>
-                    {/* ... otros detalles de la incidencia ... */}
-                  </div>
-                ))}
+              {Object.keys(incidencias).map((key) => {
+                return (
+                  <div key={key}>
+                    <h3>
+                      {incidencias[key].nombre}
+                    </h3>
+                    </div>
+                )
+              })}
             </div>
           </div>
         ))}
       </div>
 
-      {/* Modal para agregar incidencias */}
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onAddIncidencia={agregarIncidencia}
         sprintId={activeSprintForModal}
+        actualizarIncidencias={actualizarIncidencias}
       />
     </>
   );

@@ -4,49 +4,42 @@ import { useForm } from "react-hook-form";
 import { db } from "../firebase";
 import { get, set, ref, child, push } from "firebase/database";
 
-const Modal = ({ isOpen, onClose, onAddIncidencia, sprintId }) => { // estas son las propiedades que se le pasan al modal
+const Modal = ({ isOpen, onClose, onAddIncidencia, sprintId, actualizarIncidencias }) => { // estas son las prop que se le pasan al modal
+  
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm(); // Hook de react-hook-form
+  } = useForm(); 
 
-  const [usersList, setUsersList] = useState([]); // Lista de usuarios
-  const [formData, setFormData] = useState({ // Hook para el formulario
+  const [usersList, setUsersList] = useState([]); // lista de usuarios
+  const [formData, setFormData] = useState({ // hook para el formulario
     nombre: "",
-  }); // Datos del formulario
+  }); // datos del formulario
 
+  const [incidencias, setIncidencias] = useState([]);
 
-  // Función para obtener la lista de usuarios
-  const getUserList = () => {
-    get(child(ref(db), `users/`))
-      .then((snapshot) => {
-        if (snapshot.exists()) {
-          console.log(snapshot.val());
-          const data = snapshot.val();
-          setUsersList(Object.values(data));
-        } else {
-          console.log("No data available");
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+//get de las incidencias y guarda la respuesta luego lo muestra esta funcion donde la necesie 
+  const getIncidencias = () => {
+    get(child(ref(db), `incidencias/${sprintId}`))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        console.log(snapshot.val());
+        const data = snapshot.val();
+        setIncidencias(data);
+      } else {
+        console.log("No data available");
+      }
+    })
+    .catch((error)=> {
+      console.error(error);
+    });
   };
+
   useEffect(() => {
-    getUserList();
+    getIncidencias();
   }, []);
 
-  //<div>
-  //<option>Select User</option>
-  //{usersList.map((item) => (
-  //return (
-  //<option value={item.id} value ={item.id}>
-  // {item.name}
-  //</option>
-  //)
-  //)}
-  //</div>
 
   // Función para guardar los datos en la base de datos
   const saveDataToFirebase = (formData) => {
@@ -66,6 +59,7 @@ const Modal = ({ isOpen, onClose, onAddIncidencia, sprintId }) => { // estas son
     })
       .then(() => {
         console.log("Incidencia guardada con éxito");
+        actualizarIncidencias({ ...formData, id: newIncidenciaKey });
         onClose(); // Cierra el modal
       })
       .catch((error) => {
@@ -77,8 +71,6 @@ const Modal = ({ isOpen, onClose, onAddIncidencia, sprintId }) => { // estas son
     console.log("Form data: ", data);
     saveDataToFirebase(data);
     onAddIncidencia(sprintId); // Llama a la función para agregar la incidencia
-    //Que puedo hacer aqui para que se muestre la incidencia al momento de agregarla
-    
     onClose();
   };
 
@@ -91,9 +83,8 @@ const Modal = ({ isOpen, onClose, onAddIncidencia, sprintId }) => { // estas son
           <h2>Agregar Incidencia al {sprintId}</h2>
         </div>
 
-        {/* Formulario para agregar la incidencia */}
         <form onSubmit={handleSubmit(onSubmit)}>
-          {/* Campo de ejemplo */}
+    
           <div className="flex flex-col justify-center items-center bg-gray-200 py-2 px-5 rounded-lg">
             <label htmlFor="incidenciaNombre">Nombre de la Incidencia:</label>
 
@@ -106,7 +97,7 @@ const Modal = ({ isOpen, onClose, onAddIncidencia, sprintId }) => { // estas son
             {errors.nombre && <span>Este campo es obligatorio</span>}
           </div>
 
-          {/* Otros campos del formulario... */}
+    
 
           <div className="flex flex-col sm:flex-row justify-center items-center space-y-1 sm:space-y-0 sm:space-x-3 mt-4">
             <button
