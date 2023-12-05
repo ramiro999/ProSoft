@@ -1,18 +1,83 @@
 // Modal.js
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { db } from "../firebase";
+import { get, set, ref, child, push } from "firebase/database";
 
-const Modal = ({ isOpen, onClose, onAddIncidencia, sprintId }) => {
-   
-    const { register, handleSubmit, formState: { errors } } = useForm();
+const Modal = ({ isOpen, onClose, onAddIncidencia, sprintId, actualizarIncidencias }) => { // estas son las prop que se le pasan al modal
+  
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm(); 
 
-    const onSubmit = (data) => {
-        console.log(data);
-        onAddIncidencia(sprintId);
-        onClose();
-    };
-     
-    if (!isOpen) return null;
+  const [usersList, setUsersList] = useState([]); // lista de usuarios
+  const [formData, setFormData] = useState({ // hook para el formulario
+    nombre: "",
+  }); // datos del formulario
+
+  const [incidencias, setIncidencias] = useState([]);
+
+//get de las incidencias y guarda la respuesta luego lo muestra esta funcion donde la necesie 
+  const getIncidencias = () => {
+    get(child(ref(db), `incidencias/${sprintId}`))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        console.log(snapshot.val());
+        const data = snapshot.val();
+        setIncidencias(data);
+      } else {
+        console.log("No data available");
+      }
+    })
+    .catch((error)=> {
+      console.error(error);
+    });
+  };
+
+  useEffect(() => {
+    getIncidencias();
+  }, []);
+
+
+  // Función para guardar los datos en la base de datos
+  const saveDataToFirebase = (formData, sprintId) => {
+    // Define la ruta en la base de datos para guardar los datos
+    const newIncidenciaKey = push( // Genera un ID único para la incidencia
+      child(ref(db), `incidencias/${sprintId}`) // Guarda la incidencia en la colección de incidencias
+    ).key;
+    const incidenciaRef = ref(
+      db,
+      `incidencias/${sprintId}/${newIncidenciaKey}`
+    ); // Referencia a la incidencia en la base de datos
+
+    // Usa la función set para guardar los datos en la base de datos
+    set(incidenciaRef, {
+      ...formData,
+      sprintId,
+    })
+      .then(() => {
+        // Llama a la función onAddIncidencia con los datos de la nueva incidencia y el sprintId
+        onAddIncidencia({
+          ...formData,
+          id: newIncidenciaKey, // Asegúrate de incluir el ID de la incidencia
+        }, sprintId);
+        onClose(); // Cierra el modal
+      })
+      .catch((error) => {
+        console.error("Error al guardar la incidencia: ", error);
+      });
+  };
+
+  const onSubmit = (data) => {
+    console.log("Form data: ", data);
+    saveDataToFirebase(data, sprintId);
+    //onAddIncidencia(sprintId); // Llama a la función para agregar la incidencia
+    onClose();
+  };
+
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
@@ -21,9 +86,8 @@ const Modal = ({ isOpen, onClose, onAddIncidencia, sprintId }) => {
           <h2>Agregar Incidencia al {sprintId}</h2>
         </div>
 
-        {/* Formulario para agregar la incidencia */}
         <form onSubmit={handleSubmit(onSubmit)}>
-          {/* Campo de ejemplo */}
+    
           <div className="flex flex-col justify-center items-center bg-gray-200 py-2 px-5 rounded-lg">
             <label htmlFor="incidenciaNombre">Nombre de la Incidencia:</label>
 
@@ -36,18 +100,18 @@ const Modal = ({ isOpen, onClose, onAddIncidencia, sprintId }) => {
             {errors.nombre && <span>Este campo es obligatorio</span>}
           </div>
 
-          {/* Otros campos del formulario... */}
+    
 
           <div className="flex flex-col sm:flex-row justify-center items-center space-y-1 sm:space-y-0 sm:space-x-3 mt-4">
             <button
               type="submit"
-              className="bg-tertiary hover:bg-quaternary text-white py-1 px-3 rounded my-3 sm:my-0"
+              className="bg-tertiary hover:bg-quaternary text-white py-1 px-3 rounded my-1 sm:my-0"
             >
               Agregar
             </button>
 
             <button
-              className="bg-tertiary hover:bg-quaternary text-white py-1 px-3 rounded my-3 sm:my-0"
+              className="bg-tertiary hover:bg-quaternary text-white py-1 px-3 rounded my-1 sm:my-0"
               onClick={onClose}
             >
               Cerrar
