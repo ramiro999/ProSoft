@@ -7,6 +7,7 @@ import { Home } from "./pages/Home";
 import  Login  from "./pages/Login";
 import { Register } from "./pages/Register";
 import {AuthProvider} from './context/authContext'
+import { ProtectedRoute } from './components/ProtectedRoute'
 import Backlog from './pages/Backlog';
 import Planner from './pages/Planner';
 import Schedule from './pages/Schedule';
@@ -88,9 +89,24 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/backlog" element={<Backlog />} />
-          <Route path="/planner" element={<Planner />} />
-          <Route path="/schedule" element={<Schedule />} /> 
+          <Route path="/backlog" element={
+            <ProtectedRoute>
+              <Backlog />
+            </ProtectedRoute>
+            } 
+            />
+          <Route path="/planner" element={
+          <ProtectedRoute>
+            <Planner />
+          </ProtectedRoute>
+          } 
+          />
+          <Route path="/schedule" element={
+          <ProtectedRoute>
+            <Schedule />
+          </ProtectedRoute>
+          } 
+          /> 
         </Routes>
       </AuthProvider>
     </div>
