@@ -18,16 +18,16 @@ export default function Backlog() {
         <div className="flex">
           <div
             className={` ${
-              open ? "w-72" : "w-20 "
-            } bg-gray-900 h-screen p-5  pt-8 relative duration-300`}
+              open ? "w-48" : "w-20 "
+            } bg-gray-900 h-screen pb-96 flex flex-col justify-center items-center relative duration-300 `}
           >
             <img
               src="/assets/icons/control.png"
-              className={`absolute cursor-pointer -right-3 top-9 w-7 border-dark-purple
+              className={`absolute cursor-pointer -right-3 top-8 w-7 border-dark-purple
               border-2 rounded-full  ${!open && "rotate-180"}`}
               onClick={() => setOpen(!open)}
             />
-            <div className="flex gap-x-4 items-center">
+            <div className="flex items-center">
               <img
                 src="/assets/logoPS.png"
                 className={`cursor-pointer duration-500 ${
@@ -62,10 +62,10 @@ export default function Backlog() {
 
 
 
-          <div className="h-screen flex-1 p-7">
-            <h1 className="text-2xl text-white font-semibold bg-primary">Proyecto</h1>
+          <div className="h-screen flex-1">
+            <h1 className="text-2xl text-white font-semibold bg-primary p-5">Proyecto</h1>
 
-            <div className="d-flex my-5">
+            <div className="d-flex my-5 p-3">
             <AddBar></AddBar>
               </div>
           </div>
