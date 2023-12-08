@@ -11,6 +11,7 @@ import { ProtectedRoute } from './components/ProtectedRoute'
 import Backlog from './pages/Backlog';
 import Planner from './pages/Planner';
 import Schedule from './pages/Schedule';
+import Comments from './pages/Comments';
 
 const data = {
   data: [
@@ -104,6 +105,12 @@ function App() {
           <Route path="/schedule" element={
           <ProtectedRoute>
             <Schedule />
+          </ProtectedRoute>
+          } 
+          />
+          <Route path="/comments" element={
+          <ProtectedRoute>
+            <Comments />
           </ProtectedRoute>
           } 
           /> 

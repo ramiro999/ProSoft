@@ -57,12 +57,11 @@ export default function Planner() {
 
 
 
-      <div className="h-screen flex-1 ">
+      <div className="h-screen flex-1 bg-sextarian">
         <h1 className="text-2xl text-white font-semibold bg-primary p-5">Proyecto</h1>
-
-        <div className="d-flex">
-
-          <div className="col-3 mx-3">
+        <div className="d-flex p-8">
+        <h2 className="text-3xl font-bold mb-4 ">Planificador</h2>
+          <div className="col-3 ">
             <div className="bg-quinary my-2 px-3 py-2 rounded" >Por Hacer</div>
             <div>
               <TaskCard></TaskCard>
@@ -70,21 +69,21 @@ export default function Planner() {
             </div>
           </div>
 
-          <div className="col-3 mx-3">
+          <div className="col-3">
             <div className="bg-quaternary my-2 px-3 py-2 rounded">En Proceso</div>
             <div>
               <TaskCard></TaskCard>
             </div>
           </div>
 
-          <div className="col-3 mx-3">
+          <div className="col-3">
             <div className="bg-tertiary my-2 px-3 py-2 rounded">En revisión</div>
             <div>
               <TaskCard></TaskCard>
             </div>
           </div>
 
-          <div className="col-3 mx-3">
+          <div className="col-3">
             <div className="bg-secondary my-2 px-3 py-2 rounded">Finalizado</div>
             <div>
               <TaskCard></TaskCard>
