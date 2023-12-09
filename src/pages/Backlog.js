@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import Sidebar from '../components/Sidebar';
 import Input from '../components/Input';
-import BlockLabelButton from '../components/BlockLabelButton';
+import AddBar from '../components/AddBar';
 
 export default function Backlog() {
 
-  const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(true);
     const Menus = [
         { title: "Backlog", src: "User", gap: true },
         { title: "Planificador ", src: "Calendar" },
@@ -18,16 +18,16 @@ export default function Backlog() {
         <div className="flex">
           <div
             className={` ${
-              open ? "w-72" : "w-20 "
-            } bg-gray-900 h-screen p-5  pt-8 relative duration-300`}
+              open ? "w-48" : "w-20 "
+            } bg-gray-900 h-screen pb-96 flex flex-col justify-center items-center relative duration-300 `}
           >
             <img
               src="/assets/icons/control.png"
-              className={`absolute cursor-pointer -right-3 top-9 w-7 border-dark-purple
-               border-2 rounded-full  ${!open && "rotate-180"}`}
+              className={`absolute cursor-pointer -right-3 top-6 w-6 border-dark-purple
+              border-2 rounded-full  ${!open && "rotate-180"}`}
               onClick={() => setOpen(!open)}
             />
-            <div className="flex gap-x-4 items-center">
+            <div className="flex items-center">
               <img
                 src="/assets/logoPS.png"
                 className={`cursor-pointer duration-500 ${
@@ -39,7 +39,7 @@ export default function Backlog() {
                   !open && "scale-0"
                 }`}
               >
-                Prosoft
+                ProSoft
               </h1>
             </div>
             <ul className="pt-6">
@@ -59,15 +59,12 @@ export default function Backlog() {
               ))}
             </ul>
           </div>
-
-
-
-          <div className="h-screen flex-1 p-7">
-            <h1 className="text-2xl text-white font-semibold bg-primary">Proyecto</h1>
-
-            <div className="d-flex my-5">
-            <BlockLabelButton></BlockLabelButton>
-              </div>
+          <div className="h-screen flex-1 bg-sextarian">
+            <h1 className="text-2xl text-white font-semibold bg-primary p-5">Proyecto</h1>
+            <div className="d-flex p-8">
+            <h2 className="text-3xl font-bold mb-4 ">Backlog</h2>
+            <AddBar></AddBar>
+            </div>
           </div>
     </div>
   );
