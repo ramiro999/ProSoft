@@ -16,8 +16,6 @@ export default function AddBar({ sprintId }) {
       .then((snapshot) => {
         if (snapshot.exists()) {
           const incidencias = snapshot.val();
-          // Asegúrate de que el valor que recibes es un array, 
-          // o conviértelo a un array si es necesario
           const incidenciasArray = Array.isArray(incidencias) ? incidencias : Object.values(incidencias);
           setIncidenciasPorSprint(prevIncidencias => ({
             ...prevIncidencias,
@@ -98,7 +96,6 @@ export default function AddBar({ sprintId }) {
         />
       ))}
     </div>
-
 
       <Modal
         isOpen={isModalOpen}
