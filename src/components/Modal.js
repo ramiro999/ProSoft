@@ -53,45 +53,45 @@
       saveDataToFirebase(data);
     };
   
-    if (!isOpen) return null;
+    if (!isOpen) return null;   
 
 
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-        <div className="bg-white p-4 rounded">
-          <div className="flex justify-center items-center mb-5 text-md sm:text-md md:text-md lg:text-base">
-            <h2>Agregar Incidencia al {sprintId}</h2>
-          </div>
-          <form onSubmit={handleSubmit(onSubmit)}>
-      
-            <div className="flex flex-col justify-center items-center bg-gray-200 py-2 px-5 rounded-lg">
-              <label htmlFor="incidenciaNombre">Nombre de la Incidencia:</label>
-              <input
-                className="border border-gray-200 p-2 w-full rounded-lg"
-                id="incidenciaNombre"
-                type="text"
-                {...register("nombre", { required: true })} // Registrar el input para el formulario
-              />
-              {errors.nombre && <span>Este campo es obligatorio</span>}
-            </div>
-      
-            <div className="flex flex-col sm:flex-row justify-center items-center space-y-1 sm:space-y-0 sm:space-x-3 mt-4">
-              <button
-                type="submit"
-                className="bg-tertiary hover:bg-quaternary text-white py-1 px-3 rounded my-1 sm:my-0"
-              >
-                Agregar
-              </button>
-              <button
-                className="bg-tertiary hover:bg-quaternary text-white py-1 px-3 rounded my-1 sm:my-0"
-                onClick={onClose}
-              >
-                Cerrar
-              </button>
-            </div>
-          </form>
+      <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+        <div className="text-center mb-4">
+          <h2 className="font-bold text-xl mb-2">Agregar Incidencia al {sprintId}</h2>
+          <p className="text-gray-700 text-sm">Introduce los detalles de la incidencia a continuación.</p>
         </div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="mb-4">
+            <label htmlFor="incidenciaNombre" className="block text-sm font-medium text-gray-700">Nombre de la Incidencia:</label>
+            <input
+              className="mt-1 block w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              id="incidenciaNombre"
+              type="text"
+              {...register("nombre", { required: true })}
+            />
+            {errors.nombre && <span className="text-red-500 text-xs italic">Este campo es obligatorio</span>}
+          </div>
+          <div className="flex items-center justify-between">
+            <button
+              type="submit"
+              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
+            >
+              Agregar
+            </button>
+            <button
+              type="button"
+              className="inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none"
+              onClick={onClose}
+            >
+              Cerrar
+            </button>
+          </div>
+        </form>
       </div>
+    </div>
     );
   };
   export default Modal;
