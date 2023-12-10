@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import AddTask from '../components/AddTask';
+import AddTask from '../components/tasks/AddTask';
 
 export default function Backlog() {
     const [open, setOpen] = useState(true);

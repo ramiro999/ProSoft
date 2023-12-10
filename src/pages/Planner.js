@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from 'react-router-dom'
-import TaskCard from "../components/TaskCard";
+import TaskCard from "../components/tasks/TaskCard";
 
 export default function Planner() {
 
@@ -15,7 +15,7 @@ export default function Planner() {
 
 
   return (
-    <div className="flex">
+    <div className="flex overflow-hidden h-screen">
       <div
         className={`${open ? "w-48" : "w-20"} bg-gray-900 h-screen flex flex-col justify-start items-center relative duration-300 sticky top-0`}
       >
@@ -60,7 +60,7 @@ export default function Planner() {
 
 
 
-      <div className="h-screen flex-1 bg-sextarian">
+      <div className="flex-1 bg-sextarian overflow-y-auto">
         <h1 className="text-2xl text-white font-semibold bg-primary p-5">Proyecto</h1>
         <div className="d-flex p-8">
         <h2 className="text-3xl font-bold mb-4 ">Planificador</h2>

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-
 export function Sidebar() {
 
   const [open, setOpen] = useState(true);
@@ -52,14 +51,7 @@ export function Sidebar() {
                 </ul>
             </div>
       
-      <div className="flex-1 bg-sextarian overflow-y-auto">
-                <h1 className="text-2xl text-white font-semibold bg-primary p-5">Proyecto</h1>
-
-
-
-
-                
-      </div>
+      
     </div>
   );
 };
