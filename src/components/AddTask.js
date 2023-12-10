@@ -2,10 +2,9 @@ import React, { useState, useEffect } from "react";
 import { db } from "../firebase";
 import { get, set, ref, child, push } from "firebase/database";
 import SprintCard from "./SprintCard";
-
 import Modal from "./Modal";
 
-export default function AddBar({ sprintId }) {
+export default function AddTask({ sprintId }) {
   const [sprints, setSprints] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeSprintForModal, setActiveSprintForModal] = useState(null);

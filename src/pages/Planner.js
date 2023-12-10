@@ -1,22 +1,23 @@
 import React, { useState } from "react";
+import { Link } from 'react-router-dom'
 import TaskCard from "../components/TaskCard";
 
 export default function Planner() {
 
   const [open, setOpen] = useState(true);
   const Menus = [
-    { title: "Backlog", src: "User", gap: true },
-    { title: "Planificador ", src: "Calendar" },
-    { title: "Cronograma", src: "Search" },
-    { title: "Comentarios", src: "Chart" },
-    { title: "Configuraciones", src: "Setting", gap: true },
-  ];
+    { title: "Backlog", src: "User", gap: true, to: "/Backlog" },
+    { title: "Planificador", src: "Calendar", to: "/Planner" },
+    { title: "Cronograma", src: "Search", to: "/Schedule" },
+    { title: "Comentarios", src: "Chart", to: "/Comments" },
+    // { title: "Configuraciones", src: "Setting", gap: true, to: "/configuraciones" },
+];
+
 
   return (
     <div className="flex">
       <div
-        className={` ${open ? "w-48" : "w-20 "
-          } bg-gray-900 h-screen relative duration-300 pb-96 flex flex-col justify-center items-center`}
+        className={`${open ? "w-48" : "w-20"} bg-gray-900 h-screen flex flex-col justify-start items-center relative duration-300 sticky top-0`}
       >
         <img
           src="/assets/icons/control.png"
@@ -25,7 +26,7 @@ export default function Planner() {
               border-2 rounded-full  ${!open && "rotate-180"}`}
           onClick={() => setOpen(!open)}
         />
-        <div className="flex  items-center">
+        <div className="flex items-center mt-2">
           <img
             src="/assets/logoPS.png"
             className={`cursor-pointer duration-500 ${open && "rotate-[360deg]"
@@ -40,6 +41,7 @@ export default function Planner() {
         </div>
         <ul className="pt-6">
           {Menus.map((Menu, index) => (
+            <Link key={index} to={Menu.to} className="flex w-full">
             <li
               key={index}
               className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 
@@ -51,6 +53,7 @@ export default function Planner() {
                 {Menu.title}
               </span>
             </li>
+            </Link>
           ))}
         </ul>
       </div>

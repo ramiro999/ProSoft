@@ -75,10 +75,20 @@ export default class Gantt extends Component {
     componentDidMount() {
     gantt.config.date_format = "%Y-%m-%d %H:%i";
     const { tasks } = this.props;
-    gantt.init(this.ganttContainer);
     this.initGanttDataProcessor();
-    gantt.parse(tasks);
+    gantt.init(this.ganttContainer);
+    gantt.parse(this.props.tasks);
     }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.zoom !== this.props.zoom) {
+          this.setZoom(this.props.zoom);
+        }
+        if (prevProps.tasks !== this.props.tasks) {
+          gantt.clearAll();
+          gantt.parse(this.props.tasks);
+        }
+      }
 
     componentWillUnmount() {
     if (this.dataProcessor) {
