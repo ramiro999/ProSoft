@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import { db } from "../../firebase";
 import { get, set, ref, child, push } from "firebase/database";
 import SprintCard from "./SprintCard";
-import Modal from "../Modal";
+
 
 export default function AddTask({ sprintId }) {
   const [sprints, setSprints] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [activeSprintForModal, setActiveSprintForModal] = useState(null);
+  
   const [incidenciasPorSprint, setIncidenciasPorSprint] = useState({});
 
   const getIncidenciasPorSprint = (sprintId) => {
@@ -39,20 +38,8 @@ export default function AddTask({ sprintId }) {
     });
   }, [sprints]);
 
-  const agregarIncidencia = (nuevaIncidencia, sprintId) => {
-    setIncidenciasPorSprint(prev => ({
-      ...prev,
-      [sprintId]: [...(prev[sprintId] || []), nuevaIncidencia] // Asegúrate de que prev[sprintId] es un array
-    }));
-  };
 
-  const handleAddIncidencia = (nuevaIncidencia, sprintId) => {
-    setIncidenciasPorSprint(prev => ({
-      ...prev,
-      [sprintId]: [...(prev[sprintId] || []), nuevaIncidencia]
-    }));
-  };
-  
+ 
 
 
   //const actualizarIncidencias = (nuevaIncidencia) => {
@@ -96,13 +83,7 @@ export default function AddTask({ sprintId }) {
       ))}
     </div>
 
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onAddIncidencia={handleAddIncidencia}
-        sprintId={activeSprintForModal}
-        
-      />
+   
     </>
   );
 }

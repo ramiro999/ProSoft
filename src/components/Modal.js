@@ -6,28 +6,30 @@
 
 
   const Modal = ({ isOpen, onClose, onAddIncidencia, sprintId, actualizarIncidencias }) => {
-    const { register, handleSubmit, formState: { errors } } = useForm(); 
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const [incidencias, setIncidencias] = useState([]);
+    const [formData, setFormData] = useState({
+      nombre: "",
+    });
   
     const getIncidencias = () => {
       get(child(ref(db), `incidencias/${sprintId}`))
-      .then((snapshot) => {
-        if (snapshot.exists()) {
-          console.log(snapshot.val());
-          const data = snapshot.val();
-          setIncidencias(data);
-        } else {
-          console.log("No data available");
-        }
-      })
-      .catch((error)=> {
-        console.error(error);
-      });
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            const data = snapshot.val();
+            setIncidencias(data);
+          } else {
+            console.log("No data available");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     };
   
     useEffect(() => {
       getIncidencias();
-    }, []);
+    }, [sprintId]);
   
     const saveDataToFirebase = (formData) => {
       const newIncidenciaKey = push(child(ref(db), `incidencias/${sprintId}`)).key;
@@ -37,28 +39,46 @@
         ...formData,
         sprintId,
       })
-      .then(() => {
-        console.log("Incidencia guardada con éxito");
-        actualizarIncidencias({ ...formData, id: newIncidenciaKey });
-        onAddIncidencia({ ...formData, id: newIncidenciaKey }, sprintId);
-        onClose();
-      })
-      .catch((error) => {
-        console.error("Error al guardar la incidencia: ", error);
-      });
+        .then(() => {
+          console.log("Incidencia guardada con éxito");
+          onClose();
+        })
+        .catch((error) => {
+          console.error("Error al guardar la incidencia: ", error);
+        });
     };
   
     const onSubmit = (data) => {
       console.log("Form data: ", data);
       saveDataToFirebase(data);
+    
+      // Obtén una copia del objeto de incidencias actual
+      const incidenciasCopy = { ...incidencias };
+    
+      // Agregar la nueva incidencia al objeto de incidencias con una clave única
+      const newIncidenciaKey = Date.now(); // Puedes usar una clave única, como la marca de tiempo
+      incidenciasCopy[newIncidenciaKey] = data;
+    
+      // Actualizar el estado local con el nuevo objeto de incidencias
+      setIncidencias(incidenciasCopy);
+    
+      // Llamamos a onAddIncidencia aquí para pasar la nueva incidencia a SprintCard.js
+      if (onAddIncidencia) {
+        onAddIncidencia(data);
+      }
+    
+      // Llamamos a onClose aquí para cerrar el modal automáticamente
+      onClose();
     };
+    
+    
   
-    if (!isOpen) return null;   
-
-
+    if (!isOpen) return null;
     return (
       <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center">
       <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+
+
         <div className="text-center mb-4">
           <h2 className="font-bold text-xl mb-2">Agregar Incidencia al {sprintId}</h2>
           <p className="text-gray-700 text-sm">Introduce los detalles de la incidencia a continuación.</p>
