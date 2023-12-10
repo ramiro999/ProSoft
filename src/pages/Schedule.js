@@ -30,6 +30,7 @@ function Schedule() {
     <div className="flex">
       <Sidebar />
       <div className="flex-1">
+      <h1 className="text-2xl text-white font-semibold bg-primary p-5">Proyecto</h1>
         <Toolbar
           zoom={zoom}
           onZoomChange={handleZoomChange}

@@ -20,7 +20,8 @@ export default class Toolbar extends Component {
         });
 
         return (
-            <div className='tool-bar'>
+            <div className='tool-bar p-5'>
+                <h2 className="text-3xl font-bold mb-4">Diagrama de Gantt</h2><br></br>
                 <b>Zooming: </b>
                     { zoomRadios }
             </div>

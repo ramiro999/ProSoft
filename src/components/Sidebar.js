@@ -16,26 +16,26 @@ export function Sidebar() {
   return (
     <div className="flex">
       <div
-        className={` ${open ? "w-48" : "w-20 "
-          } bg-gray-900 h-screen relative duration-300 pb-96 flex flex-col justify-center items-center`}
+        className={`${open ? "w-48" : "w-20 "
+          } bg-gray-900 h-screen items-start flex flex-col justify-start items-center mx-center relative duration-300 `}
       >
         <img
           src="/assets/icons/control.png"
-          className={`absolute cursor-pointer -right-3 top-9 w-7 border-dark-purple
-               border-2 rounded-full  ${!open && "rotate-180"}`}
+          className={`absolute cursor-pointer -right-3 top-6 w-6 border-dark-purple
+        border-2 rounded-full  ${!open && "rotate-180"}`}
           onClick={() => setOpen(!open)}
         />
-        <div className="flex items-center">
+        <div className="flex items-center space-y-5">
           <img
             src="/assets/logoPS.png"
             className={`cursor-pointer duration-500 ${open && "rotate-[360deg]"
               }`}
           />
           <h1
-            className={`text-white origin-left font-medium text-xl duration-200 ${!open && "scale-0"
+            className={`text-white origin-left font-medium text-xl duration-200 self-start ${!open && "scale-0"
               }`}
           >
-            Prosoft
+            ProSoft
           </h1>
         </div>
         <ul className="pt-6">
@@ -53,9 +53,6 @@ export function Sidebar() {
             </li>
           ))}
         </ul>
-      </div>
-      <div className="h-screen flex-1 p-7">
-        <h1 className="text-2xl text-white font-semibold bg-gray-900">Proyecto</h1>
       </div>
     </div>
   );
