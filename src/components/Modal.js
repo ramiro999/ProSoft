@@ -34,42 +34,59 @@
     const saveDataToFirebase = (formData) => {
       const newIncidenciaKey = push(child(ref(db), `incidencias/${sprintId}`)).key;
       const incidenciaRef = ref(db, `incidencias/${sprintId}/${newIncidenciaKey}`);
-  
+    
       set(incidenciaRef, {
         ...formData,
         sprintId,
       })
         .then(() => {
           console.log("Incidencia guardada con éxito");
+    
+          // Después de guardar la incidencia, obtenemos los datos actualizados
+          get(child(ref(db), `incidencias/${sprintId}`))
+            .then((snapshot) => {
+              if (snapshot.exists()) {
+                const newIncidencia = snapshot.val();
+    
+                // Agregamos la nueva incidencia al estado local y al estado global (si es necesario)
+                setIncidencias([...incidencias, newIncidencia]);
+    
+                // Llamamos a onAddIncidencia aquí para pasar la nueva incidencia a SprintCard.js
+                if (onAddIncidencia) {
+                  onAddIncidencia(newIncidencia);
+                }
+              } else {
+                console.log("No data available");
+              }
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+    
           onClose();
         })
         .catch((error) => {
           console.error("Error al guardar la incidencia: ", error);
         });
     };
+    
   
     const onSubmit = (data) => {
       console.log("Form data: ", data);
       saveDataToFirebase(data);
     
-      // Obtén una copia del objeto de incidencias actual
-      const incidenciasCopy = { ...incidencias };
+      // Obtén una copia del array de incidencias actual
+      const incidenciasCopy = [...incidencias];
     
-      // Agregar la nueva incidencia al objeto de incidencias con una clave única
-      const newIncidenciaKey = Date.now(); // Puedes usar una clave única, como la marca de tiempo
-      incidenciasCopy[newIncidenciaKey] = data;
+      // Agregar la nueva incidencia al array de incidencias
+      incidenciasCopy.push(data);
     
-      // Actualizar el estado local con el nuevo objeto de incidencias
+      // Actualizar el estado local con el nuevo array de incidencias
       setIncidencias(incidenciasCopy);
     
-      // Llamamos a onAddIncidencia aquí para pasar la nueva incidencia a SprintCard.js
-      if (onAddIncidencia) {
-        onAddIncidencia(data);
-      }
-    
-      // Llamamos a onClose aquí para cerrar el modal automáticamente
       onClose();
     };
+    
     
     
   

@@ -1,16 +1,68 @@
   // SprintCard.js
-  import React, { useState } from "react";
-  import Modal from "../Modal";    
+  import React, { useState, useEffect } from "react"; 
   import Swal from "sweetalert2"
+  import { db } from "../../firebase";
+import { get, set, ref, child, push } from "firebase/database";
 
-  function SprintCard({sprintId, sprint, incidencias, onAddIncidencia }) {
-      const [isModalOpen, setIsModalOpen] = useState(false);
-      const [activeSprintForModal, setActiveSprintForModal] = useState(null);
-      const [tarjetaIncidencias, setTarjetaIncidencias] = useState(incidencias); // Nuevo estado local para las incidencias
-      
-      const handleAddIncidencia = (newIncidencia) => {
-        setTarjetaIncidencias([...tarjetaIncidencias, newIncidencia]);
+  function SprintCard({sprintId, sprint}) {
+      const [incidencias, setIncidencias] = useState([]);
+      const [nuevaIncidencia, setNuevaIncidencia] = useState("");
+      const [showInput, setShowInput] = useState(false);
+
+      const handleAgregarIncidencia = () => {
+        setShowInput(true);
       };
+    
+      const handleGuardarIncidencia = () => {
+        if (nuevaIncidencia.trim() === "") {
+          return;
+        }
+    
+        const newIncidenciaKey = push(child(ref(db), `incidencias/${sprintId}`)).key;
+        const incidenciaRef = ref(db, `incidencias/${sprintId}/${newIncidenciaKey}`);
+    
+        set(incidenciaRef, {
+          nombre: nuevaIncidencia,
+          estado: "Por hacer", // Puedes agregar más campos según tus necesidades
+        })
+          .then(() => {
+            console.log("Incidencia guardada con éxito");
+            setNuevaIncidencia(""); // Limpiar el campo de incidencia
+            setShowInput(false); // Cerrar el input
+            // Puedes actualizar la lista de incidencias aquí si es necesario
+          })
+          .catch((error) => {
+            console.error("Error al guardar la incidencia: ", error);
+          });
+
+
+          const nuevaIncidenciaObj = {
+            nombre: nuevaIncidencia,
+            estado: "Por hacer",
+          };
+          setIncidencias((prevIncidencias) => [...prevIncidencias, nuevaIncidenciaObj]);
+      };
+
+      useEffect(() => {
+        // Obtener las incidencias para este sprint desde Firebase
+        get(child(ref(db), `incidencias/${sprintId}`))
+          .then((snapshot) => {
+            if (snapshot.exists()) {
+              const incidenciasData = snapshot.val();
+              const incidenciasArray = Object.values(incidenciasData);
+              setIncidencias(incidenciasArray);
+            } else {
+              setIncidencias([]);
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }, [sprintId]);
+    
+
+
+
 
       const handleButtonClick = () => {
         Swal.fire({
@@ -102,6 +154,9 @@
           }
         });
       };
+
+
+      
       
       
       
@@ -116,8 +171,6 @@
               <p className="text-sm text-gray-500">{sprint.dateRange} ({incidencias.length} Incidencias)</p>
             </div>
 
-
-
             <div className="flex items-center">
               <button 
                 onClick={handleButtonClick}
@@ -126,14 +179,11 @@
                 Completar sprint
               </button>
 
-
               <button 
                 onClick={handleEditButtonClick}
                 className="text-xs bg-tertiary hover:bg-quaternary text-white py-1 px-3 rounded mr-2">
                 Editar
               </button>
-
-
 
               <button 
                 onClick={handleDeleteButtonClick}
@@ -141,10 +191,7 @@
                 Eliminar
               </button>
 
-
             </div>
-
-
 
           </div>
           <div>
@@ -163,28 +210,31 @@
 
 
           <button 
-          onClick={() => {
-              setActiveSprintForModal(sprint.id);
-              setIsModalOpen(true);
-            }}
-          //onClick={onAddIncidencia} 
+          onClick={handleAgregarIncidencia}
           className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded text-xs">
             Agregar Incidencia
           </button>
 
 
-
+          {showInput && (
+        <div className="flex justify-between items-center bg-gray-100 px-4 py-2 rounded mb-2">
+          <input
+            type="text"
+            value={nuevaIncidencia}
+            onChange={(e) => setNuevaIncidencia(e.target.value)}
+            placeholder="Nombre de la Incidencia"
+            className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+          />
+          <button
+            onClick={handleGuardarIncidencia}
+            className="text-xs bg-green-500 hover:bg-green-600 text-white py-1 px-3 rounded"
+          >
+            Guardar
+          </button>
+        </div>
+      )}
 
         </div>
-
-        <Modal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          onAddIncidencia={handleAddIncidencia}
-          sprintId={activeSprintForModal}
-          
-        />
-        
 
       </>
 

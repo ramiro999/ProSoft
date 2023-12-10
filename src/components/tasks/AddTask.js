@@ -1,89 +1,108 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../../firebase";
-import { get, set, ref, child, push } from "firebase/database";
+import { get, ref, child, set, push } from "firebase/database";
 import SprintCard from "./SprintCard";
 
-
-export default function AddTask({ sprintId }) {
+export default function AddTask() {
   const [sprints, setSprints] = useState([]);
-  
   const [incidenciasPorSprint, setIncidenciasPorSprint] = useState({});
 
-  const getIncidenciasPorSprint = (sprintId) => {
-    get(child(ref(db), `incidencias/${sprintId}`))
+  const getSprintsFromFirebase = () => {
+    get(ref(db, `sprints`))
       .then((snapshot) => {
         if (snapshot.exists()) {
-          const incidencias = snapshot.val();
-          const incidenciasArray = Array.isArray(incidencias) ? incidencias : Object.values(incidencias);
-          setIncidenciasPorSprint(prevIncidencias => ({
-            ...prevIncidencias,
-            [sprintId]: incidenciasArray
-          }));
-        } else {
-          setIncidenciasPorSprint(prevIncidencias => ({
-            ...prevIncidencias,
-            [sprintId]: []
-          }));
+          const sprintsData = snapshot.val();
+          const sprintsArray = Object.values(sprintsData);
+          setSprints(sprintsArray);
         }
       })
       .catch((error) => {
         console.error(error);
       });
   };
-  
 
   useEffect(() => {
-    sprints.forEach(sprint => {
-      getIncidenciasPorSprint(sprint.id);
-    });
+    getSprintsFromFirebase();
+  }, []);
+
+  useEffect(() => {
+    const getSprintIncidencias = async () => {
+      for (const sprint of sprints) {
+        await get(child(ref(db), `incidencias/${sprint.id}`))
+          .then((snapshot) => {
+            if (snapshot.exists()) {
+              const incidenciasData = snapshot.val();
+              const incidenciasArray = Object.values(incidenciasData);
+              setIncidenciasPorSprint((prevIncidencias) => ({
+                ...prevIncidencias,
+                [sprint.id]: incidenciasArray,
+              }));
+            } else {
+              setIncidenciasPorSprint((prevIncidencias) => ({
+                ...prevIncidencias,
+                [sprint.id]: [],
+              }));
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+    };
+
+    if (sprints.length > 0) {
+      getSprintIncidencias();
+    }
   }, [sprints]);
 
-
- 
-
-
-  //const actualizarIncidencias = (nuevaIncidencia) => {
-    //setIncidencias(prevIncidencias => [...prevIncidencias, nuevaIncidencia]);
-  //};
-  
   const crearSprint = () => {
+    const newSprintRef = push(ref(db, 'sprints'));
     const newSprint = {
-      // Objeto para representar un sprint
-      id: sprints.length + 1, // ID del sprint
-      name: `Sprint ${sprints.length + 1}`, // Nombre del sprint
-      incidencias: [], // Un array para almacenar las incidencias
+      id: newSprintRef.key, // Usar la clave generada por Firebase como ID
+      name: `Sprint ${sprints.length + 1}`, // Asegúrate de que el nombre del sprint sea único
+      // Añade cualquier otra propiedad que necesites para un sprint
     };
-    setSprints([...sprints, newSprint]);
-  };
-
   
+    set(newSprintRef, newSprint)
+      .then(() => {
+        // El sprint se ha guardado en Firebase, ahora actualiza el estado local
+        setSprints([...sprints, newSprint]);
+      })
+      .catch((error) => {
+        console.error("Error al crear un nuevo sprint: ", error);
+      });
+  };
+  
+
+
 
   return (
     <>
-      <div className="flex items-center justify-between p-2 bg-gray-100 rounded-lg shadow mb-4">
-        <span className="text-gray-700 mr-2">
-          Backlog ({sprints.length} Sprints)
-        </span>
-        <button
-          onClick={crearSprint}
-          className="bg-tertiary hover:bg-quaternary text-white py-1 px-3 rounded-lg transition-colors duration-200"
-        >
-          Crear sprint
-        </button>
-      </div>
-
-      <div className="max-w-4xl mx-auto">
-      {sprints.map((sprint) => (
-        <SprintCard
-          key={sprint.id}
-          sprint={sprint}
-          incidencias={incidenciasPorSprint[sprint.id] || []}
-          onAddIncidencia={() => {/* Lógica para manejar la adición de incidencias */}}
-        />
-      ))}
+    <div className="flex items-center justify-between p-2 bg-gray-100 rounded-lg shadow mb-4">
+      <span className="text-gray-700 mr-2">
+        Backlog ({sprints.length} Sprints)
+      </span>
+      <button
+        onClick={crearSprint}
+        className="bg-tertiary hover:bg-quaternary text-white py-1 px-3 rounded-lg transition-colors duration-200"
+      >
+        Crear sprint
+      </button>
     </div>
+    <div className="max-w-4xl mx-auto">
+    {sprints.map((sprint) => (
+      <SprintCard
+        key={sprint.id}
+        sprint={sprint}
+        incidencias={incidenciasPorSprint[sprint.id] || []}
+        onAddIncidencia={() => {/* Lógica para manejar la adición de incidencias */}}
+      />
+    ))}
+  </div>
 
-   
-    </>
-  );
+
+  </>
+);
 }
+
+// Compare this snippet from src/components/tasks/TaskCard.js:
