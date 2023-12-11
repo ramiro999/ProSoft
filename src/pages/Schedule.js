@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Gantt from '../components/Gantt';
-import Toolbar from '../components/Toolbar';
-import MessageArea from '../components/MessageArea';
-import Sidebar from '../components/Sidebar';
+import Toolbar from '../components/toolbar/Toolbar';
+import MessageArea from '../components/messageArea/MessageArea';
+import Sidebar from '../components/common/Sidebar';
 
 function Schedule() {
   const initialData = {
@@ -29,7 +29,10 @@ function Schedule() {
   return (
     <div className="flex">
       <Sidebar />
-      <div className="flex-1">
+      <div className="flex-1 flex flex-col"> {/* Ajuste: Ahora es un contenedor flex-column */}
+        <div className="bg-primary p-5">
+          <h1 className="text-2xl text-white font-semibold">Proyecto</h1>
+        </div>
         <Toolbar
           zoom={zoom}
           onZoomChange={handleZoomChange}

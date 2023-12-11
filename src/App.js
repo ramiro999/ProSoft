@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import Gantt from './components/Gantt';
-import Toolbar from './components/Toolbar';
-import MessageArea from './components/MessageArea'
+import Toolbar from './components/toolbar/Toolbar';
+import MessageArea from './components/messageArea/MessageArea'
 import { Routes, Route } from "react-router-dom";
 import { Home } from "./pages/Home";
 import  Login  from "./pages/Login";
 import { Register } from "./pages/Register";
 import {AuthProvider} from './context/authContext'
-import { ProtectedRoute } from './components/ProtectedRoute'
+import { ProtectedRoute } from './components/routes/ProtectedRoute'
 import Backlog from './pages/Backlog';
 import Planner from './pages/Planner';
 import Schedule from './pages/Schedule';
 import Comments from './pages/Comments';
+
+
 
 const data = {
   data: [
