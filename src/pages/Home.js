@@ -1,8 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/authContext";
 import { Link } from "react-router-dom";
+import ScaleLoader from "react-spinners/ScaleLoader";
 
 export function Home() {
+
+    let [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        setLoading(true)
+        setTimeout(() => {
+            setLoading(false)
+        }, 1000)
+        
+
+    }, []);
+
     const { user } = useAuth();
     const [selectedImage, setSelectedImage] = useState(null);
 
@@ -15,6 +28,9 @@ export function Home() {
     };
     let [open, setOpen] = useState(false);
     return (
+
+        loading ? <div className="flex justify-center items-center h-screen"><ScaleLoader color="#264653" loading={loading} size={150} /></div> :
+  
         <div className="bg-sextarian ">
             <div className='shadow-md w-full items-center top-0 left-0'>
                 <div className='md:flex items-center justify-between bg-primary py-1 md:px-10 '>
