@@ -1,12 +1,15 @@
 import React from 'react';
-import Sidebar from "../components/common/Sidebar"; // Asegúrate de que la ruta sea correcta
+import Sidebar from "../components/common/Sidebar"; 
 import TaskCard from "../components/tasks/TaskCard";
+import useTareas from '../hooks/useTareas';
 
 export default function Planner() {
+  const tareas = useTareas(); 
+
   const taskStatuses = [
-    { status: "Por Hacer", color: "bg-quinary" },
-    { status: "En Proceso", color: "bg-quaternary" },
-    { status: "En revisión", color: "bg-tertiary" },
+    { status: "Por hacer", color: "bg-quinary" },
+    { status: "En proceso", color: "bg-quaternary" },
+    { status: "En revision", color: "bg-tertiary" },
     { status: "Finalizado", color: "bg-secondary" },
   ];
 
@@ -22,8 +25,9 @@ export default function Planner() {
               <div key={index} className="col-span-1">
                 <div className={`${taskStatus.color} my-2 px-3 py-2 rounded`}>{taskStatus.status}</div>
                 <div>
-                  <TaskCard />
-                  {/* Repite el <TaskCard /> según sea necesario */}
+                  {tareas.filter(tarea => tarea.estado === taskStatus.status).map(tarea => (
+                    <TaskCard key={tarea.id} tarea={tarea} />
+                  ))}
                 </div>
               </div>
             ))}

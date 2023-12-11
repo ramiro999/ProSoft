@@ -241,4 +241,3 @@ import { get, set, ref, child, push } from "firebase/database";
     }
     
     export default SprintCard;
-    

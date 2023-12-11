@@ -2,31 +2,28 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import TaskCard from "../components/tasks/TaskCard";
 import Sidebar from "../components/common/Sidebar";
+import useComments from "../hooks/useComments";
 
 export default function Comments() {
-  const [open, setOpen] = useState(true);
-
-  const [comments, setComments] = useState([]);
+  const [comments, addComment, deleteComment] = useComments();
   const [newComment, setNewComment] = useState("");
+
+
   const handleAddComment = () => {
     if (newComment.trim() !== "") {
       const currentDate = new Date().toLocaleDateString();
       const newCommentObject = {
-        id: Date.now(),
         text: newComment,
-        author: "Prot3o",
+        author: "Cesar",
         date: currentDate,
       };
-      setComments([...comments, newCommentObject]);
+      addComment(newCommentObject);
       setNewComment("");
     }
   };
 
   const handleDeleteComment = (commentId) => {
-    const updatedComments = comments.filter(
-      (comment) => comment.id !== commentId
-    );
-    setComments(updatedComments);
+    deleteComment(commentId);
   };
 
   return (
