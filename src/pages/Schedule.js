@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Gantt from '../components/Gantt';
 import Toolbar from '../components/toolbar/Toolbar';
 import MessageArea from '../components/messageArea/MessageArea';
-import Sidebar from '../components/reusableComponents/Sidebar';
+import Sidebar from '../components/common/Sidebar';
 
 function Schedule() {
   const initialData = {
