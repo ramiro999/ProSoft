@@ -17,35 +17,33 @@ import { get, set, ref, child, push } from "firebase/database";
         if (nuevaIncidencia.trim() === "") {
           return;
         }
-    
-        const newIncidenciaKey = push(child(ref(db), `incidencias/${sprintId}`)).key;
-        const incidenciaRef = ref(db, `incidencias/${sprintId}/${newIncidenciaKey}`);
-    
-        set(incidenciaRef, {
+      
+        const sprintIncidenciasRef = ref(db, `sprints/${sprint.id}/incidencias`);
+        const newIncidenciaRef = push(sprintIncidenciasRef);
+      
+        set(newIncidenciaRef, {
           nombre: nuevaIncidencia,
-          estado: "Por hacer", // Puedes agregar más campos según tus necesidades
+          estado: "Por hacer",
         })
-          .then(() => {
-            console.log("Incidencia guardada con éxito");
-            setNuevaIncidencia(""); // Limpiar el campo de incidencia
-            setShowInput(false); // Cerrar el input
-            // Puedes actualizar la lista de incidencias aquí si es necesario
-          })
-          .catch((error) => {
-            console.error("Error al guardar la incidencia: ", error);
-          });
-
-
-          const nuevaIncidenciaObj = {
-            nombre: nuevaIncidencia,
-            estado: "Por hacer",
-          };
-          setIncidencias((prevIncidencias) => [...prevIncidencias, nuevaIncidenciaObj]);
+        .then(() => {
+          // Actualizar el estado local
+          setIncidencias(prevIncidencias => [
+            ...prevIncidencias,
+            { id: newIncidenciaRef.key, nombre: nuevaIncidencia, estado: "Por hacer" }
+          ]);
+          setNuevaIncidencia("");
+          setShowInput(false);
+        })
+        .catch((error) => {
+          console.error("Error al guardar la incidencia: ", error);
+        });
       };
+      
 
       useEffect(() => {
-        // Obtener las incidencias para este sprint desde Firebase
-        get(child(ref(db), `incidencias/${sprintId}`))
+        const sprintIncidenciasRef = ref(db, `sprints/${sprint.id}/incidencias`);
+      
+        get(sprintIncidenciasRef)
           .then((snapshot) => {
             if (snapshot.exists()) {
               const incidenciasData = snapshot.val();
@@ -58,7 +56,8 @@ import { get, set, ref, child, push } from "firebase/database";
           .catch((error) => {
             console.error(error);
           });
-      }, [sprintId]);
+      }, [sprint.id]); // Make sure to use sprint.id here
+      
     
 
 
