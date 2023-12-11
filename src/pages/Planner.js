@@ -1,10 +1,21 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Sidebar from "../components/common/Sidebar"; 
 import TaskCard from "../components/tasks/TaskCard";
 import useTareas from '../hooks/useTareas';
+import ScaleLoader from "react-spinners/ScaleLoader";
 
 export default function Planner() {
   const tareas = useTareas(); 
+  let [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        setLoading(true)
+        setTimeout(() => {
+            setLoading(false)
+        }, 1000)
+        
+
+    }, []);
 
   const taskStatuses = [
     { status: "Por hacer", color: "bg-quinary" },
@@ -14,6 +25,7 @@ export default function Planner() {
   ];
 
   return (
+    loading ? <div className="flex justify-center items-center h-screen"><ScaleLoader color="#264653" loading={loading} size={150} /></div> :
     <div className="flex overflow-hidden h-screen">
       <Sidebar />
       <div className="flex-1 bg-sextarian overflow-y-auto">

@@ -1,12 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import TaskCard from "../components/tasks/TaskCard";
 import Sidebar from "../components/common/Sidebar";
 import useComments from "../hooks/useComments";
+import ScaleLoader from "react-spinners/ScaleLoader";
 
 export default function Comments() {
   const [comments, addComment, deleteComment] = useComments();
   const [newComment, setNewComment] = useState("");
+  let [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        setLoading(true)
+        setTimeout(() => {
+            setLoading(false)
+        }, 1000)
+        
+
+    }, []);
+
 
 
   const handleAddComment = () => {
@@ -27,6 +39,7 @@ export default function Comments() {
   };
 
   return (
+    loading ? <div className="flex justify-center items-center h-screen"><ScaleLoader color="#264653" loading={loading} size={150} /></div> :
     <div className="flex">
       <Sidebar />
       <div className="flex-1 bg-sextarian overflow-y-auto">
